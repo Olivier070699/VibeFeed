@@ -107,3 +107,5 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
+// text
