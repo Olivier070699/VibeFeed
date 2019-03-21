@@ -17,37 +17,51 @@ firebase.initializeApp(config);
 
 
 export default class Addquote extends React.Component {
-  
 
-// Add quote to firebase
-addQuote = (quote) => {
-    firebase.database().ref('quotes/').push({
-        likes: 0,
-        quotes: quote,
-        userMail: "olivier.decock1@hotmail.com",
+
+this.state = ({
+    email: "",
+    password: "",
+    newPassword: "",
+    currentPassword: "",
+    newEmail: "",
     })
 }
 
+// Chance email
+onChangeEmailPress = () => {
 
+this.reauthenticate(this.state.currentPassword).then(() => {
+
+    let user = firebase.auth().currentUser;
+    user.updateEmail(this.state.newEmail).then(() => {
+    alert.alert("Email was changed");
+    }).catch((error) => {
+    alert.alert(error.message);
+    }) 
+
+}).catch((error) => {
+    alert.alert(error.message);
+})
+    
+}
 
   render() {
     return (
       <Container style={styles.container}>
-        {/* ADD QUOTE TO FIREBASE */}
-        <Form>
-          <Item floatingLabel>
-            <Label>Add Quote</Label>
-            <Input
-              autoCorrect={false}
-              autoCapitalize="none"
-              onChangeText={(quote) => this.setState({quote})}
-            />
-          </Item>
+        
+        {/* CHANCE EMAIL */}
+        <Input value={this.state.newEmail}
+          placeholder="newEmail"
+          autoCapitalize="none"
+          keyboardType="email-address"
+          onChangeText={(text) => {this.setState({newEmail: text})}}
+        />
+
+        <Button onPress={this.onChangeEmailPress}>
+          <Text>Change email</Text>
+            </Button>
             
-          <Button full onPress={()=>this.addQuote(this.state.quote)}>
-            <Text>Add quote</Text>
-          </Button>
-        </Form>
       </Container>
     );
   }
