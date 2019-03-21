@@ -63,11 +63,11 @@ export default class App extends React.Component {
 
 
   // Add quote to firebase
-  addQuote = (quote, email) => {
+  addQuote = (quote) => {
     firebase.database().ref('quotes/').push({
       likes: 0,
       quotes: quote,
-      userMail: email,
+      userMail: "olivier.decock1@hotmail.com",
     })
   }
 
